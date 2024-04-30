@@ -2,6 +2,7 @@
 
 
 #include "FightPawnBase.h"
+#include "Perception/AISenseConfig_Sight.h"
 
 // Sets default values
 AFightPawnBase::AFightPawnBase()
@@ -9,14 +10,36 @@ AFightPawnBase::AFightPawnBase()
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	
-	mSkel = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("MainSkel"));
-	mCapsule = CreateDefaultSubobject<UCapsuleComponent>(TEXT("MainCapsule"));
-	Movement = CreateDefaultSubobject<UFloatingPawnMovement>(TEXT("Movement"));
 
-	RootComponent = mCapsule;
-	mSkel->SetupAttachment(mCapsule);
+	
 
 
+	//생성
+	{
+		mSkel = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("MainSkel"));
+		mCapsule = CreateDefaultSubobject<UCapsuleComponent>(TEXT("MainCapsule"));
+		Movement = CreateDefaultSubobject<UFloatingPawnMovement>(TEXT("Movement"));
+		Sencer = CreateDefaultSubobject<UAIPerceptionStimuliSourceComponent>(TEXT("Sencer"));
+	}
+	//루트
+	{
+		RootComponent = mCapsule;
+		mSkel->SetupAttachment(mCapsule);
+	}
+	//센서
+	{
+		//Sencer->bAutoRegisterAsSource = true;
+		Sencer->RegisterForSense(UAISense_Sight::StaticClass());
+	}
+	//무브먼트
+	{
+
+	}
+
+
+	{
+
+	}
 }
 
 // Called when the game starts or when spawned

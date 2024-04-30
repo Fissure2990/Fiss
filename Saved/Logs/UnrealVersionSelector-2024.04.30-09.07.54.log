@@ -1,0 +1,76 @@
+Log started at 04/30/2024 09:07:57 (2024-04-30T00:07:57Z)
+No config file at C:\Users\AR student\Documents\Unreal Engine\UnrealBuildTool\BuildConfiguration.xml
+Configuration will be read from:
+  C:\Users\AR student\AppData\Roaming\Unreal Engine\UnrealBuildTool\BuildConfiguration.xml
+Log file: D:\Unreal\ProjectDefence\Saved\Logs\UnrealVersionSelector-2024.04.30-09.07.54.log
+
+Setting temp directory to 'C:\Users\AR student\AppData\Local\Temp\UnrealBuildTool\319625c3'
+    Registering build platform: UnrealBuildTool.AndroidPlatformFactory
+Android Installed SDK(s): Version_Sdk=r25b, CurrentVersion_Sdk=r25b, Version_AutoSdk=r25b, CurrentVersion_AutoSdk=
+        Registering build platform: Android - buildable: True
+    Registering build platform: UnrealBuildTool.IOSPlatformFactory
+    Registering build platform: UnrealBuildTool.LinuxPlatformFactory
+    Registering build platform: UnrealBuildTool.MacPlatformFactory
+    Registering build platform: UnrealBuildTool.TVOSPlatformFactory
+    Registering build platform: UnrealBuildTool.WindowsPlatformFactory
+Found Windows 10 SDK root at C:\Program Files (x86)\Windows Kits\10 (1)
+Found Windows 10 SDK root at C:\Program Files (x86)\Windows Kits\10 (2)
+Found Universal CRT version 10.0.10240.0 at C:\Program Files (x86)\Windows Kits\10
+Found Windows 10 SDK version 10.0.22621.0 at C:\Program Files (x86)\Windows Kits\10
+Found Universal CRT version 10.0.22621.0 at C:\Program Files (x86)\Windows Kits\10
+Win64 Installed SDK(s): MinVersion_Sdk=10.0.00000.0, MaxVersion_Sdk=10.9.99999.0, CurrentVersion_Sdk=10.0.22621.0, Version_AutoSdk=10.0.18362.0, CurrentVersion_AutoSdk=
+        Registering build platform: Win64 - buildable: True
+Log file: C:\Users\AR student\AppData\Local\UnrealBuildTool\Log_GPF.txt
+Resolved project argument D:/Unreal/ProjectDefence/ProjectDefence.uproject to D:\Unreal\ProjectDefence\ProjectDefence.uproject
+Registering project generator UnrealBuildTool.AndroidProjectGenerator for Android
+Registering project generator UnrealBuildTool.IOSProjectGenerator for IOS
+Skipping project file generator registration for IOS due to no valid BuildPlatform.
+Registering project generator UnrealBuildTool.LinuxProjectGenerator for Linux
+Skipping project file generator registration for Linux due to no valid BuildPlatform.
+Registering project generator UnrealBuildTool.LinuxProjectGenerator for LinuxArm64
+Skipping project file generator registration for LinuxArm64 due to no valid BuildPlatform.
+Registering project generator UnrealBuildTool.MacProjectGenerator for Mac
+Skipping project file generator registration for Mac due to no valid BuildPlatform.
+Registering project generator UnrealBuildTool.TVOSProjectGenerator for TVOS
+Skipping project file generator registration for TVOS due to no valid BuildPlatform.
+Registering project generator UnrealBuildTool.WindowsProjectGenerator for Win64
+
+---   SDK INFO START   ---
+---   SDK INFO END   ---
+
+
+Generating VisualStudio project files:
+Discovering modules, targets and source code for project...
+Updating C:\Program Files\Epic Games\UE_5.3\Engine\Intermediate\ProjectFiles\PrimaryProjectName.txt: contents have changed. Saving previous version to C:\Program Files\Epic Games\UE_5.3\Engine\Intermediate\ProjectFiles\PrimaryProjectName.txt.old.
+Updating C:\Program Files\Epic Games\UE_5.3\Engine\Intermediate\ProjectFiles\PrimaryProjectPath.txt: contents have changed. Saving previous version to C:\Program Files\Epic Games\UE_5.3\Engine\Intermediate\ProjectFiles\PrimaryProjectPath.txt.old.
+Found Visual Studio installation: C:\Program Files\Microsoft Visual Studio\2022\Community (Product=Microsoft.VisualStudio.Product.Community, Version=17.8.34330.188)
+Found Visual Studio toolchain: C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.16.27023 (Family=14.16.27023, FamilyRank=4, Version=14.16.27051, Is64Bit=True, ReleaseChannel=Latest, Architecture=x64, Error=True, Redist=C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Redist\MSVC\14.38.33130)
+Found Visual Studio toolchain: C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.36.32532 (Family=14.36.32532, FamilyRank=0, Version=14.36.32543, Is64Bit=True, ReleaseChannel=Latest, Architecture=x64, Error=False, Redist=C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Redist\MSVC\14.36.32532)
+Found Visual Studio toolchain: C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130 (Family=14.38.33130, FamilyRank=4, Version=14.38.33133, Is64Bit=True, ReleaseChannel=Latest, Architecture=x64, Error=False, Redist=C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Redist\MSVC\14.38.33130)
+Detected supported platforms: Win64, Android
+Skipping C:\Program Files\Epic Games\UE_5.3\Engine\Intermediate\Build\BuildRules\UE5Rules.dll: File is installed
+Skipping C:\Program Files\Epic Games\UE_5.3\Engine\Intermediate\Build\BuildRules\UE5ProgramRules.dll: File is installed
+Generating target Editor for D:\Unreal\ProjectDefence\Intermediate\ProjectFiles\UE5.vcxproj
+Generating target Game for D:\Unreal\ProjectDefence\Intermediate\ProjectFiles\UE5.vcxproj
+Compiling D:\Unreal\ProjectDefence\Intermediate\Build\BuildRules\ProjectDefenceModuleRules.dll: Assembly does not exist
+Adding event matcher: CompileEventMatcher
+Adding event matcher: LinkEventMatcher
+Adding event matcher: MicrosoftEventMatcher
+Adding event matcher: XoreaxEventMatcher
+D:\Unreal\ProjectDefence\Source\ProjectDefence.Target.cs(11,47): error CS0117: 'BuildSettingsVersion' does not contain a definition for 'V5'
+D:\Unreal\ProjectDefence\Source\ProjectDefence.Target.cs(12,51): error CS0117: 'EngineIncludeOrderVersion' does not contain a definition for 'Unreal5_4'
+D:\Unreal\ProjectDefence\Source\ProjectDefenceEditor.Target.cs(11,47): error CS0117: 'BuildSettingsVersion' does not contain a definition for 'V5'
+D:\Unreal\ProjectDefence\Source\ProjectDefenceEditor.Target.cs(12,51): error CS0117: 'EngineIncludeOrderVersion' does not contain a definition for 'Unreal5_4'
+Expecting to find a type to be declared in a target rules named 'ProjectDefenceTarget'.  This type must derive from the 'TargetRules' type defined by Unreal Build Tool.
+BuildException: Expecting to find a type to be declared in a target rules named 'ProjectDefenceTarget'.  This type must derive from the 'TargetRules' type defined by Unreal Build Tool.
+   at UnrealBuildTool.RulesAssembly.CreateTargetRules(String TargetName, UnrealTargetPlatform Platform, UnrealTargetConfiguration Configuration, UnrealArchitectures Architectures, FileReference ProjectFile, CommandLineArguments Arguments, ILogger Logger, Boolean IsTestTarget, Boolean bSkipValidation, UnrealIntermediateEnvironment IntermediateEnvironment) in C:\Program Files\Epic Games\UE_5.3\Engine\Source\Programs\UnrealBuildTool\System\RulesAssembly.cs:line 780
+   at UnrealBuildTool.ProjectFileGenerator.AddProjectsForAllTargets(PlatformProjectGeneratorCollection PlatformProjectGenerators, List`1 AllGames, List`1 AllTargetFiles, String[] Arguments, List`1 EngineProjects, List`1 GameProjects, Dictionary`2 ProjectFileToUProjectFile, Dictionary`2 ProgramProjects, Dictionary`2 RulesAssemblies, ILogger Logger) in C:\Program Files\Epic Games\UE_5.3\Engine\Source\Programs\UnrealBuildTool\ProjectFiles\ProjectFileGenerator.cs:line 2719
+   at UnrealBuildTool.ProjectFileGenerator.GenerateProjectFiles(PlatformProjectGeneratorCollection PlatformProjectGenerators, String[] Arguments, Boolean bCacheDataForEditor, ILogger Logger) in C:\Program Files\Epic Games\UE_5.3\Engine\Source\Programs\UnrealBuildTool\ProjectFiles\ProjectFileGenerator.cs:line 1023
+   at UnrealBuildTool.GenerateProjectFilesMode.ExecuteAsync(CommandLineArguments Arguments, ILogger Logger) in C:\Program Files\Epic Games\UE_5.3\Engine\Source\Programs\UnrealBuildTool\Modes\GenerateProjectFilesMode.cs:line 65
+   at UnrealBuildTool.UnrealBuildTool.Main(String[] ArgumentsArray) in C:\Program Files\Epic Games\UE_5.3\Engine\Source\Programs\UnrealBuildTool\UnrealBuildTool.cs:line 659
+WriteFileIfChanged() wrote 2 changed files of 2 requested writes.
+Timeline:
+
+[ 0.000]
+[ 0.000](+7.624) <unknown>
+[ 7.624]

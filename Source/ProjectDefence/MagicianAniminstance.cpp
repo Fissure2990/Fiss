@@ -3,3 +3,7 @@
 
 #include "MagicianAniminstance.h"
 
+void UMagicianAniminstance::OnAttack()
+{
+
+}

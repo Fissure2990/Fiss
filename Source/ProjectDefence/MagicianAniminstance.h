@@ -14,4 +14,7 @@ class PROJECTDEFENCE_API UMagicianAniminstance : public UAnimInstance
 {
 	GENERATED_BODY()
 	
+public:
+	void OnAttack();
+
 };

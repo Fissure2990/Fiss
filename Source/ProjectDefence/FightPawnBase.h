@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
 #include "Components/CapsuleComponent.h"
+#include "Perception/AIPerceptionStimuliSourceComponent.h"
 #include "GameFramework/FloatingPawnMovement.h"
 #include "FightPawnBase.generated.h"
 
@@ -36,4 +37,7 @@ protected:
 
 	UPROPERTY(EditAnywhere)
 	UFloatingPawnMovement* Movement;
+
+	UPROPERTY(EditAnywhere)
+	UAIPerceptionStimuliSourceComponent* Sencer;
 };
