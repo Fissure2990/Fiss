@@ -27,11 +27,20 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite);
 	UProjectileMovementComponent* Movement;
 
+	UPROPERTY(VisibleAnywhere);
+	int32 Damage;
+
+	UPROPERTY(VisibleAnywhere)
+	AActor* Master;
+
+	bool OnlyOneDamage = false;
+	
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	virtual void SpawnSpike();
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

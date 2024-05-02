@@ -2,7 +2,7 @@
 
 
 #include "ProjectileBase.h"
-
+#include "../FightPawn/FightPawnBase.h"
 // Sets default values
 AProjectileBase::AProjectileBase()
 {
@@ -21,6 +21,7 @@ AProjectileBase::AProjectileBase()
 		Movement->MaxSpeed = 0.0f;
 		Movement->ProjectileGravityScale = 0.0f;
 	}
+	//콜리전
 	{
 		Sphere->SetSphereRadius(32.0f);
 		Sphere->SetLineThickness(0.0f);
@@ -35,6 +36,11 @@ AProjectileBase::AProjectileBase()
 
 		Sphere->OnComponentBeginOverlap.AddDynamic(this, &AProjectileBase::OnBeginOverlap);
 	}
+
+	{
+		SetLifeSpan(30.0f);
+	}
+
 }
 
 // Called when the game starts or when spawned
@@ -42,6 +48,10 @@ void AProjectileBase::BeginPlay()
 {
 	Super::BeginPlay();
 	
+}
+
+void AProjectileBase::SpawnSpike()
+{
 }
 
 // Called every frame
@@ -53,7 +63,36 @@ void AProjectileBase::Tick(float DeltaTime)
 
 void AProjectileBase::OnBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* Other, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Cyan, "testst");
+
+	if (!Master && !Damage) return;
+
+	if (Other && OnlyOneDamage == false) 
+	{
+		// 태그가 있는지 확인
+		if (Other->Tags.Num() > 0)
+		{
+			if (Other->Tags[0] == "Team")
+			{
+
+			}
+			else if (Other->Tags[0] == "Enemy")
+			{
+				AFightPawnBase* Enemy = Cast<AFightPawnBase>(Other);
+			    if (Enemy)
+		     	{
+				Enemy->GetDamage(Damage);
+				OnlyOneDamage = true;
+				Destroy();
+				SpawnSpike();
+			    }
+			}
+			else
+			{
+				return;
+			}
+		}
+
+	}
 
 }
 

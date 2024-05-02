@@ -19,4 +19,6 @@ class PROJECTDEFENCE_API AMagician : public AFightPawnBase
 	UPROPERTY(EditAnywhere)
 	UStaticMeshComponent* Weapon;
 
+	virtual void Death() override;
+
 };

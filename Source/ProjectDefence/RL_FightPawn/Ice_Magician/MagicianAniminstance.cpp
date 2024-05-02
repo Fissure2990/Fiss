@@ -3,17 +3,27 @@
 
 #include "MagicianAniminstance.h"
 #include "Magician.h"
+#include "../../Projectile/ProjectileBase.h"
 #include "../../Projectile/PJ_Magic_Ice.h"
 #include "../../FightPawn/FightPawnController.h"
 #include "GameFramework/Character.h"
 
 UMagicianAniminstance::UMagicianAniminstance()
 {
+    //공격
     {
-        static ConstructorHelpers::FObjectFinder<UAnimMontage> AttackAss(TEXT("/Script/Engine.AnimMontage'/Game/AB/Magician_Attack.Magician_Attack'"));
+        static ConstructorHelpers::FObjectFinder<UAnimMontage> AttackAss(TEXT("/Script/Engine.AnimMontage'/Game/GameBP/AB/Magician/Magician_Attack.Magician_Attack'"));
         if (AttackAss.Succeeded())
         {
             Attack = AttackAss.Object;
+        }
+    }
+    //사망
+    {
+        static ConstructorHelpers::FObjectFinder<UAnimMontage> DeathAss(TEXT("/Script/Engine.AnimMontage'/Game/GameBP/AB/Magician/Magician_Death.Magician_Death'"));
+        if (DeathAss.Succeeded())
+        {
+            Death = DeathAss.Object;
         }
     }
 }
@@ -26,6 +36,15 @@ void UMagicianAniminstance::OnAttack()
 
     IsAttack = true;
  }
+
+void UMagicianAniminstance::OnDie()
+{ 
+    Montage_Play(Death);
+ 
+    IsAttack = true;
+}
+
+
 
 void UMagicianAniminstance::AnimNotify_AttackEnd()
 {
@@ -48,13 +67,30 @@ void UMagicianAniminstance::AnimNotify_Shooting()
    // 회전 계산
    FRotator ProjectileRotation = FRotationMatrix::MakeFromX(Direction).Rotator();
 
-
+   //소환
    APJ_Magic_Ice* Projectile = GetWorld()->SpawnActor<APJ_Magic_Ice>(
        APJ_Magic_Ice::StaticClass(),
        SocketLocation,
        ProjectileRotation
-   );
+   );   
+   if (!Projectile) return;
+
+   //변수 설정
+   Projectile->Sphere->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+
+   // 변수 설정
+   Projectile->Damage = Char->Damage;
+   Projectile->Master = Char;
+
+   // 충돌 컴포넌트 다시 활성화
+   Projectile->Sphere->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+
 
   //FVector NewDirection = (Target->GetActorLocation() - Projectile->GetActorLocation()).GetSafeNormal();
  // Projectile->Movement->Velocity = NewDirection * Projectile->Movement->InitialSpeed;
+}
+
+void UMagicianAniminstance::AnimNotify_PauseMontage()
+{
+    Montage_Pause();
 }

@@ -17,10 +17,30 @@ class PROJECTDEFENCE_API AFightPawnBase : public APawn
 public:
 	// Sets default values for this pawn's properties
 	AFightPawnBase();
+	virtual void BeginPlay();
 
 public:
 	UPROPERTY(EditAnywhere)
 	USkeletalMeshComponent* mSkel;
+
+	UPROPERTY(VisibleAnywhere, Category = "Stats")
+	UDataTable* CS_Table;
+	
+	//스탯
+		UPROPERTY(VisibleAnywhere)
+		int32 Health = 0;
+
+		UPROPERTY(VisibleAnywhere)
+		int32 Gage = 0;
+
+		UPROPERTY(VisibleAnywhere)
+		int32 Armor = 0;
+
+		UPROPERTY(VisibleAnywhere)
+		int32 Damage = 0;
+	//데미지
+		void GetDamage(int32 Damages);
+		virtual void Death();
 protected:
 	UPROPERTY(EditAnywhere)
 	UCapsuleComponent* mCapsule;
@@ -30,4 +50,5 @@ protected:
 
 	UPROPERTY(EditAnywhere)
 	UAIPerceptionStimuliSourceComponent* Sencer;
+
 };

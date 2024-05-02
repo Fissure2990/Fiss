@@ -3,6 +3,7 @@
 
 #include "PJ_Magic_Ice.h"
 #include "NiagaraComponent.h"
+#include "PJ_IceSpike.h"
 #include "NiagaraSystem.h"
 
 // Sets default values
@@ -28,5 +29,20 @@ void APJ_Magic_Ice::BeginPlay()
 {
 	Super::BeginPlay();
 	
+
+}
+
+void APJ_Magic_Ice::SpawnSpike()
+{
+    Super::SpawnSpike();
+
+    FVector Location = GetActorLocation();
+    FRotator Rotation = GetActorRotation();
+
+    APJ_IceSpike* Projectile = GetWorld()->SpawnActor<APJ_IceSpike>(
+        APJ_IceSpike::StaticClass(),
+        Location,
+        Rotation
+    );
 
 }

@@ -19,6 +19,7 @@ private:
 	UMagicianAniminstance();
 
 	UAnimMontage* Attack;
+	UAnimMontage* Death;
 	
 	bool IsAttack = false;
 
@@ -27,9 +28,12 @@ private:
 	void AnimNotify_AttackEnd();
 	UFUNCTION()
 	void AnimNotify_Shooting();
-
+	UFUNCTION()
+	void AnimNotify_PauseMontage();
 public:
 	void OnAttack();
+
+	void OnDie();
 
 
 };

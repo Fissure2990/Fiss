@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Magician.h"
+#include "MagicianAniminstance.h"
 #include "../../FightPawn/FightPawnController.h"
 
 
@@ -33,9 +34,9 @@ AMagician::AMagician()
 		AIControllerClass = AFightPawnController::StaticClass();
 	}
 
-	//무브먼트
+	//태그
 	{
-
+		Tags.Add(TEXT("Team"));
 	}
 
 	{
@@ -57,7 +58,7 @@ AMagician::AMagician()
 		}
 		//애니메이션
 		{
-				static ConstructorHelpers::FClassFinder<UAnimInstance> Asset(TEXT("AnimBlueprint'/Game/AB/AB_Magician.AB_Magician_C'"));
+				static ConstructorHelpers::FClassFinder<UAnimInstance> Asset(TEXT("/Script/Engine.AnimBlueprint'/Game/GameBP/AB/Magician/AB_Magician.AB_Magician_C'"));
 				if (Asset.Succeeded())
 				{
 					mSkel->SetAnimInstanceClass(Asset.Class);
@@ -65,4 +66,13 @@ AMagician::AMagician()
 		}
 	}
 
+}
+
+void AMagician::Death()
+{
+	Super::Death();
+
+	auto Anim = Cast<UMagicianAniminstance>(mSkel->GetAnimInstance());
+
+	Anim->OnDie();
 }

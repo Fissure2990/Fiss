@@ -10,7 +10,7 @@
 AFightPawnController::AFightPawnController()
 {
 	{
-		static ConstructorHelpers::FObjectFinder<UBlackboardData> Asset(TEXT("BlackboardData'/Game/Behavior/FightMonster/LongRanged/LR_BB.LR_BB'"));
+		static ConstructorHelpers::FObjectFinder<UBlackboardData> Asset(TEXT("BlackboardData'/Game/GameBP/Behavior/FightMonster/LongRanged/LR_BB.LR_BB'"));
 		if (Asset.Succeeded())
 		{
 			BBAsset = Asset.Object;
@@ -18,7 +18,7 @@ AFightPawnController::AFightPawnController()
 	}
 
 	{
-		static ConstructorHelpers::FObjectFinder<UBehaviorTree> Asset(TEXT("BehaviorTree'/Game/Behavior/FightMonster/LongRanged/LR_BT.LR_BT'"));
+		static ConstructorHelpers::FObjectFinder<UBehaviorTree> Asset(TEXT("BehaviorTree'/Game/GameBP/Behavior/FightMonster/LongRanged/LR_BT.LR_BT'"));
 		if (Asset.Succeeded())
 		{
 			BTAsset = Asset.Object;
@@ -95,21 +95,29 @@ void AFightPawnController::Tick(float DeltaTime)
 
 	float MinDistance = FLT_MAX;
 
-	for (AActor* Actor : Targets)
-	{
-		float Distance = FVector::Dist(this->GetPawn()->GetActorLocation(), Actor->GetActorLocation());
-		if (Distance < MinDistance)
+		for (AActor* Actor : Targets)
 		{
-			MinDistance = Distance;
-			Target = Actor;
-		}
+			if (!Actor || !GetPawn()) continue;
 
-		if (Target)
-		{
-			Blackboard->SetValueAsObject("EnemyActor", Target);
-			// 가장 가까운 액터에 대한 추가 처리 로직이 필요한 경우 여기에 구현
+			if (Actor->Tags.Num() == 0 || GetPawn()->Tags.Num() == 0) continue;
+
+
+			if (Actor->Tags[0] == GetPawn()->Tags[0]) continue;
+
+			float Distance = FVector::Dist(this->GetPawn()->GetActorLocation(), Actor->GetActorLocation());
+
+			if (Distance < MinDistance)
+			{
+				MinDistance = Distance;
+				Target = Actor;
+			}
+
+			if (Target)
+			{
+				Blackboard->SetValueAsObject("EnemyActor", Target);
+				// 가장 가까운 액터에 대한 추가 처리 로직이 필요한 경우 여기에 구현
+			}
 		}
-	}
 
 	//ACharacter* PlayerCharacter = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
 
