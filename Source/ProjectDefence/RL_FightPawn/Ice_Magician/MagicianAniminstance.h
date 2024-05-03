@@ -23,6 +23,8 @@ private:
 	
 	bool IsAttack = false;
 
+	virtual void NativeUpdateAnimation(float DeltaTime) override;
+
 	//노티파이
 	UFUNCTION()
 	void AnimNotify_AttackEnd();
@@ -35,5 +37,7 @@ public:
 
 	void OnDie();
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	float Speed;
 
 };

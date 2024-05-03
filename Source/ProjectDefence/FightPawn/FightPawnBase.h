@@ -41,6 +41,7 @@ public:
 	//데미지
 		void GetDamage(int32 Damages);
 		virtual void Death();
+		virtual void Attack();
 protected:
 	UPROPERTY(EditAnywhere)
 	UCapsuleComponent* mCapsule;

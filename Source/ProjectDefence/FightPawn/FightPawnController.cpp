@@ -95,6 +95,8 @@ void AFightPawnController::Tick(float DeltaTime)
 
 	float MinDistance = FLT_MAX;
 
+	if (Targets.IsEmpty()) return;
+
 		for (AActor* Actor : Targets)
 		{
 			if (!Actor || !GetPawn()) continue;

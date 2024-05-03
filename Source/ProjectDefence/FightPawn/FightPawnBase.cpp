@@ -97,4 +97,8 @@ void AFightPawnBase::Death()
 
 }
 
+void AFightPawnBase::Attack()
+{
+}
+
 	

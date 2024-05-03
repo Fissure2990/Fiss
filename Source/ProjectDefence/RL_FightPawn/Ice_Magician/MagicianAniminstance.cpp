@@ -46,6 +46,30 @@ void UMagicianAniminstance::OnDie()
 
 
 
+void UMagicianAniminstance::NativeUpdateAnimation(float DeltaTime)
+{
+    Super::NativeUpdateAnimation(DeltaTime);
+
+     APawn* OwningPawn = TryGetPawnOwner();
+
+     UFloatingPawnMovement* FloatingMovement = Cast<UFloatingPawnMovement>(OwningPawn->GetMovementComponent());
+
+     float MaxSpeed = 1.0f;
+
+     // 컴포넌트의 최대 속도를 가져옵니다.
+     if (FloatingMovement)
+     {
+         MaxSpeed = FloatingMovement->MaxSpeed;
+     }
+
+    if (OwningPawn)
+    {
+        // 폰의 속도를 계산합니다.
+        float CurrentSpeed = OwningPawn->GetVelocity().Size();
+        Speed = FMath::Clamp(CurrentSpeed / MaxSpeed, 0.0f, 1.0f);
+    }
+}
+
 void UMagicianAniminstance::AnimNotify_AttackEnd()
 {
     IsAttack = false;
