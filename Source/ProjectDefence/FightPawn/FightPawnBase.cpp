@@ -20,12 +20,14 @@ AFightPawnBase::AFightPawnBase()
 		mSkel = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("MainSkel"));
 		mCapsule = CreateDefaultSubobject<UCapsuleComponent>(TEXT("MainCapsule"));
 		Movement = CreateDefaultSubobject<UFloatingPawnMovement>(TEXT("Movement"));
+		Widget = CreateDefaultSubobject<UWidgetComponent>(TEXT("HpBar"));
 		Sencer = CreateDefaultSubobject<UAIPerceptionStimuliSourceComponent>(TEXT("Sencer"));
 	}
 	//루트
 	{
 		RootComponent = mCapsule;
 		mSkel->SetupAttachment(mCapsule);
+		Widget->SetupAttachment(RootComponent);
 	}
 	//센서
 	{
@@ -36,18 +38,29 @@ AFightPawnBase::AFightPawnBase()
 	{
 
 	}
-
+	//위젯
+	{
+		Widget->SetRelativeLocation(FVector(0, 0, 180));
+	}
 	//회전 설정
 	{
 		bUseControllerRotationYaw = true;
 	}
-
+	
+	//데이터 테이블
 	{
-		
 		static ConstructorHelpers::FObjectFinder<UDataTable> Asset(TEXT("/Script/Engine.DataTable'/Game/GameBP/DataBase/StatTable.StatTable'"));
 		if (Asset.Succeeded())
 		{
 			CS_Table = Asset.Object;
+		}
+	}
+	//위젯 
+	{
+		static ConstructorHelpers::FClassFinder <UUserWidget> Asset(TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/GameBP/Widget/HP-Bar/Monster_HpBar.Monster_HpBar_C'"));
+		if (Asset.Succeeded())
+		{
+			Widget->SetWidgetClass(Asset.Class);
 		}
 	}
 }
@@ -94,7 +107,7 @@ void AFightPawnBase::GetDamage(int32 Damages)
 
 void AFightPawnBase::Death()
 {
-
+	GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Blue, "TESTSS");
 }
 
 void AFightPawnBase::Attack()

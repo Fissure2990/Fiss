@@ -6,6 +6,7 @@
 #include "GameFramework/Pawn.h"
 #include "Components/CapsuleComponent.h"
 #include "Perception/AIPerceptionStimuliSourceComponent.h"
+#include "Components/WidgetComponent.h"
 #include "GameFramework/FloatingPawnMovement.h"
 #include "FightPawnBase.generated.h"
 
@@ -52,4 +53,9 @@ protected:
 	UPROPERTY(EditAnywhere)
 	UAIPerceptionStimuliSourceComponent* Sencer;
 
+
+public:
+	bool IsDying = false;
+	UPROPERTY(EditAnywhere)
+	UWidgetComponent* Widget;
 };
