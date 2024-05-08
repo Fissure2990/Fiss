@@ -41,7 +41,12 @@ void AMelee_FightPawnController::BeginPlay()
 	//	// 분리 행동 활성화 및 가중치 설정
 	//	//CrowdComp->SetCrowdSeparation(true);
 	//}
+	
+}
 
+void AMelee_FightPawnController::Tick(float Time)
+{
+	Super::Tick(Time);
 }
 
 

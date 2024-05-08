@@ -11,21 +11,21 @@ AMagician::AMagician()
 	//무기
 	{
 		Weapon = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Weapon"));
-		Weapon->SetupAttachment(mSkel, "WeaponSocket");
+		Weapon->SetupAttachment(GetMesh(), "WeaponSocket");
 	}
 
 
 	//스켈 및 캡슐 위치 조정
 	{
 		
-		mSkel->SetRelativeLocation(FVector(0, 0, -80.0f));
-		mSkel->SetRelativeRotation(FRotator(0, -90.0f, 0));
+		GetMesh()->SetRelativeLocation(FVector(0, 0, -80.0f));
+		GetMesh()->SetRelativeRotation(FRotator(0, -90.0f, 0));
 		//mCapsule->SetRelativeLocation(FVector(0, 0, 80));
 	}
 	//캡슐 크기 조정
 	{
-		mCapsule->SetCapsuleHalfHeight(90.0f);
-		mCapsule->SetCapsuleRadius(50.0f);
+		GetCapsuleComponent()->SetCapsuleHalfHeight(90.0f);
+		GetCapsuleComponent()->SetCapsuleRadius(50.0f);
 	}
 
 	//컨트롤러
@@ -44,7 +44,7 @@ AMagician::AMagician()
 			static ConstructorHelpers::FObjectFinder<USkeletalMesh> Asset(TEXT("/Script/Engine.SkeletalMesh'/Game/BattleWizardPolyart/Meshes/WizardSM.WizardSM'"));
 			if (Asset.Succeeded())
 			{
-				mSkel->SetSkeletalMesh(Asset.Object);
+				GetMesh()->SetSkeletalMesh(Asset.Object);
 			}
 		}
 		//무기
@@ -60,7 +60,7 @@ AMagician::AMagician()
 				static ConstructorHelpers::FClassFinder<UAnimInstance> Asset(TEXT("/Script/Engine.AnimBlueprint'/Game/GameBP/AB/Magician/AB_Magician.AB_Magician_C'"));
 				if (Asset.Succeeded())
 				{
-					mSkel->SetAnimInstanceClass(Asset.Class);
+					GetMesh()->SetAnimInstanceClass(Asset.Class);
 				}
 		}
 	}
@@ -72,7 +72,7 @@ void AMagician::Death()
 {
 	Super::Death();
 
-	auto Anim = Cast<UMagicianAniminstance>(mSkel->GetAnimInstance());
+	auto Anim = Cast<UMagicianAniminstance>(GetMesh()->GetAnimInstance());
 
 	Anim->OnDie();
 
@@ -84,6 +84,8 @@ void AMagician::Death()
 
 	AIC->StopMovement();
 
-	mCapsule->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	GetCapsuleComponent()->SetCollisionProfileName("NoCollision");
+	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+
 
 }

@@ -9,6 +9,7 @@
 #include "GameFramework/Character.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Perception/AISenseConfig_Sight.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "BehaviorTree/BlackboardComponent.h"
 
 // Sets default values
@@ -21,19 +22,16 @@ AFightPawnBase::AFightPawnBase()
 	
 
 
-	//생성
+	//생성 및 삭제
 	{
-		mSkel = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("MainSkel"));
-		mCapsule = CreateDefaultSubobject<UCapsuleComponent>(TEXT("MainCapsule"));
 		Detection = CreateDefaultSubobject<USphereComponent>(TEXT("Detection"));
-		Movement = CreateDefaultSubobject<UFloatingPawnMovement>(TEXT("Movement"));
 		Widget = CreateDefaultSubobject<UWidgetComponent>(TEXT("HpBar"));
 	
 	}
 	//루트
 	{
-		RootComponent = mCapsule;
-		mSkel->SetupAttachment(RootComponent);
+		RootComponent = GetCapsuleComponent();
+		GetMesh()->SetupAttachment(RootComponent);
 		Widget->SetupAttachment(RootComponent);
 		Detection->SetupAttachment(RootComponent);
 	}
@@ -44,7 +42,7 @@ AFightPawnBase::AFightPawnBase()
 		Detection->OnComponentBeginOverlap.AddDynamic(this, &AFightPawnBase::OnOverlapBegin);
 	    Detection->OnComponentEndOverlap.AddDynamic(this, &AFightPawnBase::OnOverlapEnd);
 
-		mCapsule->SetCollisionProfileName("PawnBase");
+		GetCapsuleComponent()->SetCollisionProfileName("PawnBase");
 	}
 	//위젯
 	{

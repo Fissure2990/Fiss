@@ -3,7 +3,8 @@
 
 #include "Skel_WarriorAnimInstance.h"
 #include "Skel_Warrior.h"
-#include "GameFramework/FloatingPawnMovement.h"
+#include "GameFramework/CharacterMovementComponent.h"
+
 
 
 USkel_WarriorAnimInstance::USkel_WarriorAnimInstance()
@@ -45,10 +46,10 @@ void USkel_WarriorAnimInstance::NativeUpdateAnimation(float DeltaTime)
 
     if (!OwningPawn) return;
 
-    UFloatingPawnMovement* FloatingMovement = Cast<UFloatingPawnMovement>(OwningPawn->GetMovementComponent());
+    UCharacterMovementComponent* FloatingMovement = Cast<UCharacterMovementComponent>(OwningPawn->GetMovementComponent());
     if (!FloatingMovement) return;
     float MaxSpeed = 1.0f;
-    MaxSpeed = FloatingMovement->MaxSpeed;
+    MaxSpeed = FloatingMovement->GetMaxSpeed();
 
         // 폰의 속도를 계산합니다.
      float CurrentSpeed = OwningPawn->GetVelocity().Size();

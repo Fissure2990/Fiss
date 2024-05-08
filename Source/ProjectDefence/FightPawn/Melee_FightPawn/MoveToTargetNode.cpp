@@ -4,6 +4,7 @@
 #include "MoveToTargetNode.h"
 #include "AIController.h"
 #include "../FightPawnBase.h"
+#include "NavigationSystem.h"
 #include "BehaviorTree/BlackboardComponent.h"
 
 
@@ -25,7 +26,9 @@ EBTNodeResult::Type UMoveToTargetNode::ExecuteTask(UBehaviorTreeComponent& Owner
 		return EBTNodeResult::Failed;
 	}
 	//AIController->MoveToActor(Target);
-	
+
+
+
 	AIController->MoveToLocation(Target->GetActorLocation());
 	return EBTNodeResult::Type();
 }

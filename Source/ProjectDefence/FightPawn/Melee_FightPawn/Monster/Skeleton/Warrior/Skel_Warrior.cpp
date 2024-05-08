@@ -15,8 +15,8 @@ ASkel_Warrior::ASkel_Warrior()
 		Weapon = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Weapon"));
 		WeaponCol = CreateDefaultSubobject<UCapsuleComponent>(TEXT("WeaponCollision"));
 
-		Weapon->SetupAttachment(mSkel, "WeaponSocket");
-		WeaponCol->SetupAttachment(mSkel, "WeaponCol");
+		Weapon->SetupAttachment(GetMesh(), "WeaponSocket");
+		WeaponCol->SetupAttachment(GetMesh(), "WeaponCol");
 
 		WeaponCol->SetCapsuleHalfHeight(50.0f);
 		WeaponCol->SetCapsuleRadius(35.0f);
@@ -30,14 +30,14 @@ ASkel_Warrior::ASkel_Warrior()
 	//스켈 및 캡슐 위치 조정
 	{
 
-		mSkel->SetRelativeLocation(FVector(0, 0, -80.0f));
-		mSkel->SetRelativeRotation(FRotator(0, -90.0f, 0));
+		GetMesh()->SetRelativeLocation(FVector(0, 0, -80.0f));
+		GetMesh()->SetRelativeRotation(FRotator(0, -90.0f, 0));
 		//mCapsule->SetRelativeLocation(FVector(0, 0, 80));
 	}
 	//캡슐 크기 조정
 	{
-		mCapsule->SetCapsuleHalfHeight(90.0f);
-		mCapsule->SetCapsuleRadius(50.0f);
+		GetCapsuleComponent()->SetCapsuleHalfHeight(90.0f);
+		GetCapsuleComponent()->SetCapsuleRadius(50.0f);
 	}
 
 	//컨트롤러
@@ -56,7 +56,7 @@ ASkel_Warrior::ASkel_Warrior()
 			static ConstructorHelpers::FObjectFinder<USkeletalMesh> Asset(TEXT("/Script/Engine.SkeletalMesh'/Game/GameBP/MonsterAsset/Skeleton/Warrior/Skeleton_Warrior.Skeleton_Warrior'"));
 			if (Asset.Succeeded())
 			{
-				mSkel->SetSkeletalMesh(Asset.Object);
+				GetMesh()->SetSkeletalMesh(Asset.Object);
 			}
 		}
 		//무기
@@ -72,7 +72,7 @@ ASkel_Warrior::ASkel_Warrior()
 			static ConstructorHelpers::FClassFinder<UAnimInstance> Asset(TEXT("/Script/Engine.AnimBlueprint'/Game/GameBP/AB/Monster/Skeleton/Warrior/SW_Animation.SW_Animation_C'"));
 			if (Asset.Succeeded())
 			{
-				mSkel->SetAnimInstanceClass(Asset.Class);
+				GetMesh()->SetAnimInstanceClass(Asset.Class);
 			}
 		}
 	}
@@ -84,7 +84,7 @@ void ASkel_Warrior::Death()
 {
 	Super::Death();
 
-	auto Anim = Cast<USkel_WarriorAnimInstance>(mSkel->GetAnimInstance());
+	auto Anim = Cast<USkel_WarriorAnimInstance>(GetMesh()->GetAnimInstance());
 
 	Anim->OnDie();
 
@@ -96,15 +96,18 @@ void ASkel_Warrior::Death()
 	
 	AIC->StopMovement();
 
-	mCapsule->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	GetCapsuleComponent()->SetCollisionProfileName("NoCollision");
+
 	Weapon->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+
 }
 
 void ASkel_Warrior::Attack()
 {
 	Super::Attack();
 
-	USkel_WarriorAnimInstance* AnimInstance = Cast<USkel_WarriorAnimInstance>(mSkel->GetAnimInstance());
+	USkel_WarriorAnimInstance* AnimInstance = Cast<USkel_WarriorAnimInstance>(GetMesh()->GetAnimInstance());
 	if (AnimInstance)
 	{
 		AAIController* AIC = Cast<AAIController>(GetController());

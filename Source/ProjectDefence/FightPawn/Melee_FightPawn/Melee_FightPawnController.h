@@ -20,12 +20,11 @@ class PROJECTDEFENCE_API AMelee_FightPawnController : public AAIController
 
 	AMelee_FightPawnController();
 	virtual void BeginPlay();
+	virtual void Tick(float Time);
 	virtual void OnPossess(APawn* InPawn);
 
 
 private:
-
-
 	UPROPERTY()
 	class UBehaviorTree* BTAsset;
 

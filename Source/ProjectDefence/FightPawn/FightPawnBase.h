@@ -3,17 +3,15 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Pawn.h"
+#include "GameFramework/Character.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/SphereComponent.h"
 #include "AIController.h"
-#include "Perception/AIPerceptionStimuliSourceComponent.h"
 #include "Components/WidgetComponent.h"
-#include "GameFramework/FloatingPawnMovement.h"
 #include "FightPawnBase.generated.h"
 
 UCLASS()
-class PROJECTDEFENCE_API AFightPawnBase : public APawn
+class PROJECTDEFENCE_API AFightPawnBase : public ACharacter
 {
 	GENERATED_BODY()
 
@@ -24,8 +22,6 @@ public:
 	virtual void Tick(float Time);
 
 public:
-	UPROPERTY(EditAnywhere)
-	USkeletalMeshComponent* mSkel;
 
 	UPROPERTY(VisibleAnywhere, Category = "Stats")
 	UDataTable* CS_Table;
@@ -47,11 +43,6 @@ public:
 		virtual void Death();
 		virtual void Attack();
 protected:
-	UPROPERTY(EditAnywhere)
-	UCapsuleComponent* mCapsule;
-
-	UPROPERTY(EditAnywhere)
-	UFloatingPawnMovement* Movement;
 
 	UPROPERTY(EditAnywhere)
 	USphereComponent* Detection;

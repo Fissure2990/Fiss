@@ -5,6 +5,7 @@
 #include "Magician.h"
 #include "../../../Projectile/ProjectileBase.h"
 #include "../../../Projectile/PJ_Magic_Ice.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Character.h"
 
 UMagicianAniminstance::UMagicianAniminstance()
@@ -51,22 +52,14 @@ void UMagicianAniminstance::NativeUpdateAnimation(float DeltaTime)
 
      APawn* OwningPawn = TryGetPawnOwner();
 
-     UFloatingPawnMovement* FloatingMovement = Cast<UFloatingPawnMovement>(OwningPawn->GetMovementComponent());
-
+     UCharacterMovementComponent* FloatingMovement = Cast<UCharacterMovementComponent>(OwningPawn->GetMovementComponent());
+     if (!FloatingMovement) return;
      float MaxSpeed = 1.0f;
+     MaxSpeed = FloatingMovement->GetMaxSpeed();
 
-     // 컴포넌트의 최대 속도를 가져옵니다.
-     if (FloatingMovement)
-     {
-         MaxSpeed = FloatingMovement->MaxSpeed;
-     }
-
-    if (OwningPawn)
-    {
-        // 폰의 속도를 계산합니다.
-        float CurrentSpeed = OwningPawn->GetVelocity().Size();
-        Speed = FMath::Clamp(CurrentSpeed / MaxSpeed, 0.0f, 1.0f);
-    }
+     // 폰의 속도를 계산합니다.
+     float CurrentSpeed = OwningPawn->GetVelocity().Size();
+     Speed = FMath::Clamp(CurrentSpeed / MaxSpeed, 0.0f, 1.0f);
 }
 
 void UMagicianAniminstance::AnimNotify_AttackEnd()
@@ -78,7 +71,7 @@ void UMagicianAniminstance::AnimNotify_Shooting()
 {
     AMagician* Char = Cast<AMagician>(TryGetPawnOwner());
     if (!Char) return;
-   FTransform SocketTransform = Char->mSkel->GetSocketTransform("ShootPoint", RTS_World);
+   FTransform SocketTransform = Char->GetMesh()->GetSocketTransform("ShootPoint", RTS_World);
    FVector SocketLocation = SocketTransform.GetLocation();
    FRotator SocketRotation = SocketTransform.GetRotation().Rotator();
    
