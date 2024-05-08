@@ -5,6 +5,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
 #include "Components/CapsuleComponent.h"
+#include "Components/SphereComponent.h"
+#include "AIController.h"
 #include "Perception/AIPerceptionStimuliSourceComponent.h"
 #include "Components/WidgetComponent.h"
 #include "GameFramework/FloatingPawnMovement.h"
@@ -19,6 +21,7 @@ public:
 	// Sets default values for this pawn's properties
 	AFightPawnBase();
 	virtual void BeginPlay();
+	virtual void Tick(float Time);
 
 public:
 	UPROPERTY(EditAnywhere)
@@ -28,16 +31,16 @@ public:
 	UDataTable* CS_Table;
 	
 	//스탯
-		UPROPERTY(VisibleAnywhere)
-		int32 Health = 0;
+		UPROPERTY(VisibleAnywhere,BlueprintReadOnly)
+		float Health = 0;
 
-		UPROPERTY(VisibleAnywhere)
+		UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		int32 Gage = 0;
 
-		UPROPERTY(VisibleAnywhere)
+		UPROPERTY(VisibleAnywhere, BlueprintReadOnly)	
 		int32 Armor = 0;
 
-		UPROPERTY(VisibleAnywhere)
+		UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		int32 Damage = 0;
 	//데미지
 		void GetDamage(int32 Damages);
@@ -51,11 +54,32 @@ protected:
 	UFloatingPawnMovement* Movement;
 
 	UPROPERTY(EditAnywhere)
-	UAIPerceptionStimuliSourceComponent* Sencer;
+	USphereComponent* Detection;
+
+	UFUNCTION()
+	void OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	UFUNCTION()
+	void OnOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
 
+	UPROPERTY(EditAnywhere)
+	TArray<AActor*> Targets;
+
+
+
+
+	UPROPERTY(EditAnywhere)
+	float Distance;
+
+	UPROPERTY()
+	AAIController* MyController;
 public:
 	bool IsDying = false;
 	UPROPERTY(EditAnywhere)
 	UWidgetComponent* Widget;
+
+	UPROPERTY(EditAnywhere)
+	AFightPawnBase* Target;
+
 };

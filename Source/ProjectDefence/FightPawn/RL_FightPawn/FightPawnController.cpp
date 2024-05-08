@@ -25,34 +25,12 @@ AFightPawnController::AFightPawnController()
 		}
 	}
 
-	{
-		Perception = CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("PerceptionComponent"));
-	    SightConfig = NewObject<UAISenseConfig_Sight>(this, TEXT("SightConfig"));
-		SightConfig->SightRadius = 1500;  // 반경 //변수 선언해서 공격 사거리 측정 
-		SightConfig->LoseSightRadius = 1550.0f;  //인식이 사라지는 반경 // 뭔지 알아내기
-		SightConfig->PeripheralVisionAngleDegrees = 180.0f;  // 주변 시야 각도 설정
-		SightConfig->SetMaxAge(5.0f);  // 감지 정보의 최대 유지 시간 설정
-		//SightConfig->AutoSuccessRangeFromLastSeenLocation = 900.0f;  // 마지막으로 보았던 위치에서 자동으로 성공 처리하는 범위
-		SightConfig->DetectionByAffiliation.bDetectEnemies = true;  // 적을 감지할지 여부
-		SightConfig->DetectionByAffiliation.bDetectFriendlies = true;  // 아군을 감지할지 여부
-		SightConfig->DetectionByAffiliation.bDetectNeutrals = true;  // 중립적인 대상을 감지할지 여부
 
-
-		// 퍼셉션 컴포넌트에 시각 인식 설정 적용
-		Perception->ConfigureSense(*SightConfig);
-		// 인식 업데이트 이벤트에 대한 콜백 함수 연결
-		Perception->OnPerceptionUpdated.AddDynamic(this, &AFightPawnController::OnPerceptionUpdated);
-	}
 }
 
 
 
-void AFightPawnController::BeginPlay()
-{
-	Super::BeginPlay();
 
-	// 시각적 인식을 위한 설정 객체 생성
-}
 
 void AFightPawnController::OnPossess(APawn* InPawn)
 {
@@ -66,79 +44,5 @@ void AFightPawnController::OnPossess(APawn* InPawn)
 		{
 			RunBehaviorTree(BTAsset);
 		}
-	}
-}
-
-void AFightPawnController::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-	if (SightConfig)
-	{
-		float SightRadius = SightConfig->SightRadius;
-		FVector Location = GetPawn()->GetActorLocation();
-
-		// 시각 범위를 디버깅 원으로 그립니다.
-		DrawDebugSphere(GetWorld(), Location, SightRadius, 32, FColor::Green, false, -1.0f, 0, 1.0f);
-	}
-
-	//PerceptionComponent->GetCurrentlyPerceivedActors(UAISense_Sight::StaticClass(), Targets);
-
-	float MinDistance = FLT_MAX;
-
-	if (Targets.IsEmpty()) return;
-
-		for (AActor* Actor : Targets)
-		{
-			if (!Actor || !GetPawn()) continue;
-
-			if (Actor->Tags.Num() == 0 || GetPawn()->Tags.Num() == 0) continue;
-
-
-			if (Actor->Tags[0] == GetPawn()->Tags[0]) continue;
-
-			auto*  TargetCheck = Cast<AFightPawnBase>(Actor);
-
-			if (TargetCheck->IsDying == true) continue;
-
-			float Distances = FVector::Dist(this->GetPawn()->GetActorLocation(), Actor->GetActorLocation());
-
-			if (Distance < MinDistance)
-			{
-				MinDistance = Distances;
-				Target = Cast<AFightPawnBase>(Actor);
-			}
-
-			if (Target)
-			{
-					Blackboard->SetValueAsObject("EnemyActor", Target);
-			}		
-		}
-
-		if (Target)
-		{
-			if (Target->IsDying == true)
-			{
-				Blackboard->SetValueAsObject("EnemyActor", nullptr);
-			}
-		}
-
-		if (!Target) return;
-		//SetFocus(Target);
-		Distance = GetPawn()->GetDistanceTo(Target);
-		GetBlackboardComponent()->SetValueAsFloat(TEXT("Distance"), Distance);
-		//AActor* FocusedActor = GetFocusActor();
-}
-
-void AFightPawnController::OnPerceptionUpdated(const TArray<AActor*>& UpdatedActors)
-{ 
-	TArray<AActor*> CurActor;
-	PerceptionComponent->GetCurrentlyPerceivedActors(UAISense_Sight::StaticClass(), CurActor);
-	Targets = CurActor;
-	if (Targets.IsEmpty())
-	{
-		Target = nullptr;
-		Blackboard->SetValueAsObject("EnemyActor", Target);
-		SetFocus(nullptr);
 	}
 }

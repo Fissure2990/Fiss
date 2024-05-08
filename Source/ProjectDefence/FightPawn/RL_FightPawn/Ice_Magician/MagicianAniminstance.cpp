@@ -5,7 +5,6 @@
 #include "Magician.h"
 #include "../../../Projectile/ProjectileBase.h"
 #include "../../../Projectile/PJ_Magic_Ice.h"
-#include "../FightPawnController.h"
 #include "GameFramework/Character.h"
 
 UMagicianAniminstance::UMagicianAniminstance()
@@ -83,8 +82,7 @@ void UMagicianAniminstance::AnimNotify_Shooting()
    FVector SocketLocation = SocketTransform.GetLocation();
    FRotator SocketRotation = SocketTransform.GetRotation().Rotator();
    
-   AFightPawnController* FPC = Cast<AFightPawnController>(Char->GetController());
-   AActor* Target = FPC->Target;
+   AActor* Target = Char->Target;
    if (!Target) return;
 
    FVector Direction = (Target->GetActorLocation() - SocketLocation).GetSafeNormal();

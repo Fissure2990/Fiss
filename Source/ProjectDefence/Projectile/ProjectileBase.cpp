@@ -15,11 +15,13 @@ AProjectileBase::AProjectileBase()
 
 	SetRootComponent(Sphere);
 	Effect->SetupAttachment(Sphere);
-	//발사체 속도
+	//발사체 
 	{
-		Movement->InitialSpeed = 500.0f;
+		//속도
+		Movement->InitialSpeed = 5000.0f;
 		Movement->MaxSpeed = 0.0f;
 		Movement->ProjectileGravityScale = 0.0f;
+
 	}
 	//콜리전
 	{
@@ -58,6 +60,7 @@ void AProjectileBase::SpawnSpike()
 void AProjectileBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
 
 }
 

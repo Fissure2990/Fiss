@@ -34,6 +34,7 @@ public:
 	AActor* Master;
 
 	bool OnlyOneDamage = false;
+
 	
 
 protected:

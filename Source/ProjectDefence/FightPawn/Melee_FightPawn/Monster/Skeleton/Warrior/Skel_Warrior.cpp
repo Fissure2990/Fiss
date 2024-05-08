@@ -76,8 +76,6 @@ ASkel_Warrior::ASkel_Warrior()
 			}
 		}
 	}
-
-	mCapsule->SetCollisionProfileName("PawnBase");
 	Weapon->SetCollisionProfileName("NoCollision");
 	WeaponCol->SetCollisionProfileName("NoCollision");
 }
@@ -112,12 +110,7 @@ void ASkel_Warrior::Attack()
 		AAIController* AIC = Cast<AAIController>(GetController());
 		if (AIC)
 		{
-			AActor* Target = Cast<AActor>(AIC->GetBlackboardComponent()->GetValueAsObject("EnemyActor"));
-			if (!Target)
-			{
-				return;
-			}
-
+			if (!Target) return;
 			AnimInstance->OnAttack();
 			AIC->StopMovement();
 		}

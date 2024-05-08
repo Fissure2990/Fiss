@@ -8,8 +8,6 @@
 
 AMagician::AMagician()
 {
-
-
 	//무기
 	{
 		Weapon = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Weapon"));

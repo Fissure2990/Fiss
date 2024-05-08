@@ -21,7 +21,6 @@ class PROJECTDEFENCE_API AMelee_FightPawnController : public AAIController
 	AMelee_FightPawnController();
 	virtual void BeginPlay();
 	virtual void OnPossess(APawn* InPawn);
-	virtual void Tick(float DeltaTime);
 
 
 private:
@@ -33,23 +32,7 @@ private:
 	UPROPERTY()
 	class UBlackboardData* BBAsset;
 
-	UPROPERTY(EditAnywhere)
-	TArray<AActor*> Targets;
+	//UPROPERTY(VisibleAnywhere)
+	//class UCrowdFollowingComponent* CrowdComp;
 
-
-public:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AI")
-	UAIPerceptionComponent* Perception;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Sight")
-	UAISenseConfig_Sight* SightConfig;
-
-	UFUNCTION()
-	void OnPerceptionUpdated(const TArray<AActor*>& UpdatedActors);
-
-	UPROPERTY(EditAnywhere)
-	AFightPawnBase* Target;
-    
-
-	UPROPERTY(EditAnywhere)
-	float Distance;
 };
